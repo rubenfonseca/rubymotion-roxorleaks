@@ -1,6 +1,6 @@
-# RoxorVM memleak with MagicalRecord example
+# RoxorVM memleak with Dispatch::Queue example
 
-This is a test project to show how RubyMotion is leaking an entire RoxorVM (144kb) everytime MagicalRecord creates a new private queue backed managed object context.
+This is a test project to show how RubyMotion is leaking an entire RoxorVM (144kb) everytime a new GCD queue is created.
 
 ## How to detect the leak?
 
@@ -9,6 +9,8 @@ This is a test project to show how RubyMotion is leaking an entire RoxorVM (144k
 - Click the "Spawn" button multiple times
 
 Result: The amount of allocated memory keeps going up, and the number of RoxorVM never goes down.
+
+![instruments](http://f.cl.ly/items/0d3U0N3d0M212s3x3n1W/Screen%20Shot%202013-04-28%20at%2011.11.51.png)
 
 ## How to generate a backtrace of the leak?
 
@@ -37,9 +39,4 @@ Example backtrace:
               libsystem_c.dylib`start_wqthread+0x1e
 
 If you hook into the `RoxorVM::~RoxorVM()` method, it is never called. So the entire VM continues to exist forever.
-
-### Small note
-
-Please note that using just regular RubyMotion `Dispatch::Queue` doesn't trigger the memory leak.
-
 
