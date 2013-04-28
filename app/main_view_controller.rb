@@ -10,10 +10,9 @@ class MainViewController < UIViewController
   end
 
   def spawn
-    MagicalRecord.saveWithBlock lambda { |context|
-      NSLog "Inside block"
-    }, completion: lambda { |success, error|
-      NSLog "Completed!"
+    queue = Dispatch::Queue.new("com.0x82.bug")
+    queue.async {
+      NSLog "Outside block"
     }
   end
 end

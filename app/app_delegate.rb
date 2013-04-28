@@ -1,14 +1,8 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    MagicalRecord.setupCoreDataStack
-
     window.makeKeyAndVisible
 
     true
-  end
-
-  def applicationWillTerminate(application)
-    MagicalRecord.cleanUp
   end
 
   def window
